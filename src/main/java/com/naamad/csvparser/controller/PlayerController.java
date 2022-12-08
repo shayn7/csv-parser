@@ -5,6 +5,7 @@ import com.naamad.csvparser.service.PlayerService;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,6 +31,7 @@ public class PlayerController {
 //        return playerService.getPlayers();
 //    }
 
+    @Cacheable("players")
     @GetMapping(produces = "text/csv")
     public ResponseEntity getPlayers() {
         try {

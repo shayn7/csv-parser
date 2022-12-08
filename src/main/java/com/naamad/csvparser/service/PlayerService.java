@@ -28,16 +28,20 @@ public class PlayerService {
         List<PlayerResponse> playersList = new ArrayList<>();
 
         for (Player p : players){
-            PlayerResponse player = webClient.get()
-                    .uri(uriBuilder -> uriBuilder
-                            .path(p.getId())
-                            .build())
-                    .retrieve()
-                    .bodyToMono(PlayerResponse.class)
-                    .block();
+            PlayerResponse player = getPlayerResponse(p);
             playersList.add(player);
         }
 
-        csvWriter.createFile(playersList);
+        csvWriter.createFile(playersList, players);
+    }
+
+    private PlayerResponse getPlayerResponse(Player p) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                .path(p.getId())
+                .build())
+                .retrieve()
+                .bodyToMono(PlayerResponse.class)
+                .block();
     }
 }
