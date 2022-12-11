@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Component
 public class CsvWriter {
 
-    public void createFile(List<PlayerResponse> players, List<Player> playerList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
+    public List<PlayerResponse> createFile(List<PlayerResponse> players, List<Player> playerList) throws IOException, CsvRequiredFieldEmptyException, CsvDataTypeMismatchException {
         Writer writer = Files.newBufferedWriter(Paths.get("src/main/resources/playersInfo.csv"));
         StatefulBeanToCsv<PlayerResponse> csvWriter = getPlayerResponseStatefulBeanToCsv(writer);
         Map<String, String> map = convertListToMap(playerList);
@@ -32,6 +32,7 @@ public class CsvWriter {
         }
         csvWriter.write(listOfPlayers);
         writer.close();
+        return listOfPlayers;
     }
 
     private Map<String, String> convertListToMap(List<Player> playerList) {
