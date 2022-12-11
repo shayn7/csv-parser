@@ -15,14 +15,12 @@ import java.util.List;
 public class CsvReader {
 
     public List<Player> parseFile() throws IOException {
-
-        List<Player> players;
         Reader reader = Files.newBufferedReader(Paths.get("src/main/resources/players.csv"));
         CsvToBean csvToBean = new CsvToBeanBuilder(reader)
                 .withType(Player.class)
                 .withIgnoreLeadingWhiteSpace(true)
                 .build();
-        players = csvToBean.parse();
+        List<Player> players = csvToBean.parse();
         reader.close();
         return players;
     }
